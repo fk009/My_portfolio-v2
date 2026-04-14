@@ -18,6 +18,7 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { PlayCircle, ArrowUpRight, Globe, BookOpen, GitBranch, HelpCircle } from "lucide-react";
 import type { WorkItem } from "@/data/portfolio";
+import { withBasePath } from "@/lib/withBasePath";
 
 // ── 型定義 ──────────────────────────────────────────────────
 type WorkProps = {
@@ -82,7 +83,7 @@ export function WorkCard({ work, index }: WorkProps) {
                 className="w-full h-full relative"
               >
                 <Image
-                  src={work.imageUrl}
+                  src={withBasePath(work.imageUrl)}
                   alt={work.title}
                   fill
                   sizes="(max-width: 1024px) 100vw, 58vw"
@@ -223,7 +224,7 @@ export function WorkCard({ work, index }: WorkProps) {
                   // アーキテクチャ図がある場合
                   <div className="relative aspect-[16/9] w-full overflow-hidden border border-white/10">
                     <Image
-                      src={work.architectureImageUrl}
+                      src={withBasePath(work.architectureImageUrl)}
                       alt={`${work.title} アーキテクチャ図`}
                       fill
                       sizes="(max-width: 1024px) 100vw, 42vw"
