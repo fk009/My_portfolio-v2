@@ -60,7 +60,7 @@ export type SkillCategory = {
 export const portfolioData = {
   // ===== プロフィール =====
   profile: {
-    name: "youkai_k",
+    name: "yuurei",
     title: "バックエンド開発者 / AIを技術顧問に、実運用レベルで課題を解決する",
     description:
       "「とりあえず動く」で終わらせず、インフラの安定性・セキュリティ・本番環境でのエラー解決まで泥臭くやり抜く開発スタイルを持っています。AIを技術顧問として使いこなしながら、未知の技術を自走でキャッチアップし、プロダクトを完遂する力が強みです。",
@@ -96,8 +96,6 @@ export const portfolioData = {
         "Python",
         "FastAPI",
         "Pydantic V2",
-        "React",
-        "Next.js",
         "Tailwind CSS",
         "Supabase",
         "PostgreSQL",

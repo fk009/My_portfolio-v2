@@ -76,5 +76,6 @@ src/
 ## ドキュメント
 
 - `CLAUDE.md`: 作業ルール
-- `MEMORY.md`: 現在状態・変更履歴
+- `MEMORY.md`: 現在状態・直近メモ
+- `docs/MEMORY_ARCHIVE.md`: 変更履歴（過去ログ）
 - `docs/INDEX.md`: 補助ドキュメント案内
