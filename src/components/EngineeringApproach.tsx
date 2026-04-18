@@ -1,14 +1,3 @@
-// ============================================================
-// EngineeringApproach.tsx - 実運用を見据えたトラブルシューティング展示セクション
-//
-// 「Qiita記事を課題解決のカタログとして魅せる」コンセプトの最重要セクション。
-//
-// 機能:
-// - カテゴリフィルタリング（全て / インフラ / セキュリティ / UX / 開発基盤）
-// - 各カードに「直面した課題」「AIとの壁打ち」「解決策」を構造化表示
-// - スタガードアニメーション（カードが順番にフェードイン）
-// - ホバーエフェクト付きカードデザイン
-// ============================================================
 "use client";
 
 import React, { useState } from "react";
@@ -16,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, AlertTriangle, Bot, CheckCircle2 } from "lucide-react";
 import { portfolioData, type EngineeringItem } from "@/data/portfolio";
 
-// ── カテゴリ設定 ──────────────────────────────────────────────
 const CATEGORIES = [
   { id: "all", label: "All" },
   { id: "インフラの安定性", label: "🔧 インフラの安定性" },
@@ -25,7 +13,6 @@ const CATEGORIES = [
   { id: "開発基盤", label: "🛠 開発基盤" },
 ] as const;
 
-// カテゴリ別のアクセントカラー
 const CATEGORY_COLORS: Record<string, { border: string; badge: string; icon: string }> = {
   "インフラの安定性": {
     border: "border-blue-500/25 hover:border-blue-500/50",
@@ -49,7 +36,6 @@ const CATEGORY_COLORS: Record<string, { border: string; badge: string; icon: str
   },
 };
 
-// ── EngineeringCard サブコンポーネント ───────────────────────
 function EngineeringCard({
   item,
   idx,
@@ -69,7 +55,6 @@ function EngineeringCard({
       transition={{ duration: 0.5, delay: idx * 0.07, ease: [0.16, 1, 0.3, 1] }}
       className={`group relative flex flex-col border ${colors.border} bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-400 p-7`}
     >
-      {/* カテゴリバッジ + 記事リンク */}
       <div className="flex items-start justify-between gap-3 mb-5">
         <span
           className={`inline-flex items-center px-2.5 py-1 text-[10px] font-sans font-bold tracking-[0.15em] uppercase border ${colors.badge} rounded-sm`}
@@ -90,15 +75,11 @@ function EngineeringCard({
         )}
       </div>
 
-      {/* タイトル */}
       <h3 className="text-base font-serif font-bold text-foreground tracking-tight mb-6 leading-snug">
         {item.title}
       </h3>
 
-      {/* ── 3ステップ構造 ──────────────────────────────────── */}
       <div className="flex flex-col gap-5 flex-1">
-
-        {/* 1. 直面した課題 */}
         <div className="flex gap-3">
           <div className="flex-shrink-0 mt-0.5">
             <AlertTriangle size={14} className="text-red-400/70" />
@@ -113,7 +94,6 @@ function EngineeringCard({
           </div>
         </div>
 
-        {/* 2. AIとの壁打ち */}
         <div className="flex gap-3">
           <div className="flex-shrink-0 mt-0.5">
             <Bot size={14} className="text-violet-400/80" />
@@ -128,7 +108,6 @@ function EngineeringCard({
           </div>
         </div>
 
-        {/* 3. 解決策 */}
         <div className="flex gap-3">
           <div className="flex-shrink-0 mt-0.5">
             <CheckCircle2 size={14} className="text-emerald-400/80" />
@@ -144,7 +123,6 @@ function EngineeringCard({
         </div>
       </div>
 
-      {/* ── タグ + 記事リンク ───────────────────────────────── */}
       <div className="mt-6 pt-5 border-t border-white/5 flex items-center justify-between gap-3 flex-wrap">
         <div className="flex flex-wrap gap-2">
           {item.tags.slice(0, 3).map((tag) => (
@@ -169,17 +147,14 @@ function EngineeringCard({
         )}
       </div>
 
-      {/* ホバー時の左アクセントライン */}
       <div className="absolute left-0 top-6 bottom-6 w-[2px] bg-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
     </motion.article>
   );
 }
 
-// ── メインコンポーネント ──────────────────────────────────────
 export function EngineeringApproach() {
   const [activeCategory, setActiveCategory] = useState<string>("all");
 
-  // カテゴリでフィルタリング
   const filtered =
     activeCategory === "all"
       ? portfolioData.engineeringApproach
@@ -193,8 +168,6 @@ export function EngineeringApproach() {
       className="py-32 px-6 md:px-12 lg:px-24 bg-background border-t border-white/5"
     >
       <div className="max-w-6xl mx-auto">
-
-        {/* ── セクションヘッダー ──────────────────────────── */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -221,7 +194,6 @@ export function EngineeringApproach() {
           </div>
         </motion.div>
 
-        {/* ── カテゴリフィルタ ────────────────────────────── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -248,7 +220,6 @@ export function EngineeringApproach() {
           </span>
         </motion.div>
 
-        {/* ── カードグリッド ───────────────────────────────── */}
         <motion.div layout className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
           <AnimatePresence mode="popLayout">
             {filtered.map((item, idx) => (
@@ -257,7 +228,6 @@ export function EngineeringApproach() {
           </AnimatePresence>
         </motion.div>
 
-        {/* ── 記事への誘導 ──────────────────────────────────── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -275,7 +245,6 @@ export function EngineeringApproach() {
             <ExternalLink size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </a>
         </motion.div>
-
       </div>
     </section>
   );

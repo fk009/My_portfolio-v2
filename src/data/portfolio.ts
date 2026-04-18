@@ -1,12 +1,3 @@
-// ============================================================
-// portfolio.ts - ポートフォリオ全体のデータ定義
-//
-// このファイルを編集することで、サイト上の全コンテンツを更新できます。
-// UI コンポーネントには直接文章を書かず、ここにデータを集約します。
-// ============================================================
-
-// ── 型定義 ──────────────────────────────────────────────────
-
 /** Works セクション: 1件の作品データ */
 export type WorkItem = {
   id: string;
@@ -41,7 +32,7 @@ export type EngineeringItem = {
     | "開発基盤";
   title: string;
   challenge: string; // 直面した課題
-  approach: string; // AIとの壁打ちによるアプローチ
+  approach: string; // アプローチ
   solution: string; // 解決策
   articleUrl: string; // Qiita等の記事URL
   tags: string[]; // 関連技術タグ
@@ -55,8 +46,6 @@ export type SkillCategory = {
   items: string[]; // 具体的な技術・ツール名
 };
 
-// ── ポートフォリオデータ本体 ─────────────────────────────────
-
 export const portfolioData = {
   // ===== プロフィール =====
   profile: {
@@ -69,7 +58,7 @@ export const portfolioData = {
     qualifications: ["基本情報技術者試験", "Python3 エンジニア認定基礎試験"],
     github: "https://github.com/fk009",
     qiita: "https://qiita.com/yuurei_09",
-    contactEmail: "example@example.com", // 仮置き - 後で差し替えてください
+    contactEmail: "example@example.com",
   },
 
   // ===== Works =====
@@ -273,7 +262,7 @@ export const portfolioData = {
         "AIと「WSL2のDockerパフォーマンス問題の根本原因」を調査。ファイルシステムの境界（Windows⇔Linux）をまたぐことが原因と特定し、プロジェクトをWSL2内ファイルシステムに置く解決策を導出。",
       solution:
         ".wslconfig でメモリ・CPU割り当てを最適化し、プロジェクトを /home/ 以下に移動。ビルド時間が従来比で約60%短縮し、開発サイクルを高速化。",
-      articleUrl: "#", // 記事URLを後で差し替えてください
+      articleUrl: "#",
       tags: ["WSL2", "Docker", "Dev Containers", "開発環境", "パフォーマンス"],
     } as EngineeringItem,
   ],
@@ -282,16 +271,16 @@ export const portfolioData = {
   skills: [
     {
       category: "Python / FastAPI",
-      level: "堅牢なAPI開発とログ基盤の構築",
+      level: "API開発と運用を想定した実装",
       description:
-        "Pydantic V2による型安全なバリデーション、loguruを用いた運用を意識したログ設計、asyncioによる非同期処理など、実運用に耐えうるコード品質を追求しました。",
-      items: ["FastAPI", "Pydantic V2", "loguru", "asyncio", "Uvicorn"],
+        "FastAPIとPydantic V2を用いた型安全なAPI開発に加え、loguruによるログ設計やasyncioでの非同期処理など、デプロイ後の運用を意識した実装を心がけています。また、パッケージ管理にはuvを採用し、pyproject.tomlによるモダンな環境構築を行っています。",
+      items: ["FastAPI", "Pydantic V2", "loguru", "asyncio", "Uvicorn", "uv"],
     },
     {
       category: "GCP インフラ",
-      level: "運用負荷とコストを意識したサーバーレス構成",
+      level: "コストとセキュリティを意識したサーバーレス構成",
       description:
-        "単なるデプロイで終わらず、IAMによる最小権限の原則、Secret Managerでの秘匿情報管理、Cloud Schedulerによるジョブ管理など、実務的な運用設計を反映させています。",
+        "Cloud Runを用いたコンテナ運用を中心に、Secret Managerでの秘匿情報管理やIAMによる適切な権限設定など、最低限のセキュリティと運用コストを考慮したインフラ構築に取り組んでいます。",
       items: [
         "Cloud Run",
         "Secret Manager",
@@ -302,9 +291,9 @@ export const portfolioData = {
     },
     {
       category: "AI / ML 活用",
-      level: "LLMとNLPモデルのシステム統合",
+      level: "プロダクトへのAI・MLモデルの統合",
       description:
-        "DeBERTaを用いた感情分析やGemini APIの組み込みなど、AIを単体で終わらせずプロダクトの機能として成立させる実装に注力しました。",
+        "感情分析タスクに向けたDeBERTa等のファインチューニングからGemini APIの組み込みまでを幅広く経験しました。それらのAI技術を単なるローカル環境での検証で終わらせず、Webアプリケーションの機能としてシステムに統合し、実稼働させる一連のプロセスに注力しています。",
       items: [
         "DeBERTa",
         "Gemini API",
@@ -314,16 +303,16 @@ export const portfolioData = {
     },
     {
       category: "データベース / BaaS",
-      level: "RLSとクエリ最適化を伴うデータ設計",
+      level: "Supabaseを用いたデータ連携と基本操作の実装",
       description:
-        "セキュリティを担保するRLS（Row Level Security）の設計や、ジョブキューを想定したテーブル構築、インデックスを意識したクエリ最適化を経験しています。",
-      items: ["Supabase", "PostgreSQL", "RLS", "SQL"],
+        "BaaSであるSupabase（PostgreSQL）を利用し、アプリケーションの要となるデータの作成・読み取り・更新・削除（CRUD操作）を実装しました。複雑なテーブル設計についてはAIの提案を活用してベストプラクティスを取り入れつつ、自身はバックエンド（FastAPI）から安全かつ正確にデータを扱うためのAPI連携と処理フローの構築に注力しました。",
+      items: ["Supabase", "PostgreSQL", "SQL"],
     },
     {
       category: "開発環境・ツール",
-      level: "再現性と効率を意識した開発基盤",
+      level: "再現性を重視したコンテナ開発環境",
       description:
-        "WSL2 + Docker + Dev Containers による再現性の高い開発環境構築、Git/GitHubによるバージョン管理、CI/CD連携を通じた開発効率化に取り組んでいます。",
+        "WSL2とDocker、Dev Containersを活用し、環境に依存しない開発基盤を構築しています。Git/GitHubでのバージョン管理や、GitHub Actionsを通じた自動化・開発効率化にも取り組んでいます。",
       items: ["WSL2", "Docker", "Dev Containers", "Git", "GitHub Actions"],
     },
   ] as SkillCategory[],

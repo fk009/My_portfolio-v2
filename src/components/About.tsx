@@ -1,9 +1,3 @@
-// ============================================================
-// About.tsx - 開発スタンス（Mindset）を強調するセクション
-//
-// 単なる自己紹介ではなく、「どういう開発者か」を伝えることを
-// 最優先にしたUI設計。3つの開発スタンスカードで差別化を図る。
-// ============================================================
 "use client";
 
 import React from "react";
@@ -11,7 +5,6 @@ import { motion } from "framer-motion";
 import { Zap, Shield, Bot } from "lucide-react";
 import { portfolioData } from "@/data/portfolio";
 
-// ── スタンスカードのデータ定義 ──────────────────────────────
 const stances = [
   {
     icon: Zap,
@@ -57,8 +50,6 @@ export function About() {
   return (
     <section id="about" className="py-32 px-6 bg-background relative border-t border-white/5">
       <div className="max-w-6xl mx-auto">
-
-        {/* ── セクションヘッダー ──────────────────────────────── */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -81,7 +72,6 @@ export function About() {
           </div>
         </motion.div>
 
-        {/* ── 開発スタンス 3原則カード ──────────────────────────── */}
         <div className="grid md:grid-cols-3 gap-6 mb-24">
           {stances.map((stance, idx) => {
             const Icon = stance.icon;
@@ -94,12 +84,10 @@ export function About() {
                 transition={{ duration: 0.7, delay: idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
                 className={`group relative flex flex-col p-8 border ${stance.borderColor} ${stance.bgColor} transition-all duration-500 hover:shadow-2xl ${stance.glowColor}`}
               >
-                {/* アイコン */}
                 <div className={`mb-6 ${stance.accentColor} transition-transform duration-300 group-hover:scale-110`}>
                   <Icon size={36} strokeWidth={1.5} />
                 </div>
 
-                {/* タイトル */}
                 <div className="mb-4">
                   <p className={`text-[10px] font-sans font-bold tracking-[0.25em] uppercase ${stance.accentColor} mb-1`}>
                     {stance.subtitle}
@@ -109,19 +97,16 @@ export function About() {
                   </h3>
                 </div>
 
-                {/* 説明文 */}
                 <p className="text-slate-300 font-sans font-light text-sm leading-relaxed mb-6 flex-1">
                   {stance.description}
                 </p>
 
-                {/* ハイライト（アンダーライン付き） */}
                 <div className={`pt-5 border-t ${stance.borderColor}`}>
                   <p className={`text-sm font-sans font-semibold ${stance.accentColor} leading-snug`}>
                     {stance.highlight}
                   </p>
                 </div>
 
-                {/* ホバー時の左アクセントライン */}
                 <div
                   className={`absolute left-0 top-8 bottom-8 w-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
                     stance.accentColor
@@ -134,10 +119,8 @@ export function About() {
           })}
         </div>
 
-        {/* ── 区切り線 ─────────────────────────────────────────── */}
         <div className="w-full h-px bg-white/10 mb-24" />
 
-        {/* ── 資格・リンク ─────────────────────────────────────── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -145,7 +128,6 @@ export function About() {
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="grid md:grid-cols-2 gap-12"
         >
-          {/* 資格 */}
           <div>
             <p className="text-sm font-sans tracking-[0.3em] uppercase text-amber-500 mb-6">
               Qualification
@@ -160,7 +142,6 @@ export function About() {
             </ul>
           </div>
 
-          {/* リンク */}
           <div>
             <p className="text-sm font-sans tracking-[0.3em] uppercase text-amber-500 mb-6">
               Links
@@ -193,7 +174,6 @@ export function About() {
             </div>
           </div>
         </motion.div>
-
       </div>
     </section>
   );

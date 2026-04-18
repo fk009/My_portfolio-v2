@@ -1,16 +1,3 @@
-// ============================================================
-// WorkCard.tsx - 作品1件ぶんの詳細カードコンポーネント
-//
-// Works.tsx から各作品データと表示順（index）を受け取り、
-// 画像・技術スタック・説明・アーキテクチャ図・技術選定理由を表示。
-//
-// 主な特徴:
-// - index が偶数 → 画像を左、テキストを右
-// - index が奇数 → 画像を右、テキストを左（lg:flex-row-reverse）
-// - 「アーキテクチャ図」タブ: 画像があれば表示、なければ破線PH
-// - 「技術選定の理由（Why）」: 技術選定の根拠をトレードオフ形式で提示
-// - パララックス（視差）スクロールアニメーション
-// ============================================================
 "use client";
 
 import React, { useRef, useState } from "react";
@@ -20,24 +7,20 @@ import { PlayCircle, ArrowUpRight, Globe, BookOpen, GitBranch, HelpCircle } from
 import type { WorkItem } from "@/data/portfolio";
 import { withBasePath } from "@/lib/withBasePath";
 
-// ── 型定義 ──────────────────────────────────────────────────
 type WorkProps = {
   work: WorkItem;
   index: number;
 };
 
-// ── タブ型 ──────────────────────────────────────────────────
 type TabType = "overview" | "architecture" | "why";
 
 export function WorkCard({ work, index }: WorkProps) {
   const isEven = index % 2 === 0;
 
-  // タブ状態管理（overview / architecture / why）
   const [activeTab, setActiveTab] = useState<TabType>("overview");
 
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // パララックス（視差）アニメーション
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
@@ -45,7 +28,6 @@ export function WorkCard({ work, index }: WorkProps) {
   const imageY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
   const hasArchitecture = work.architectureImageUrl.trim().length > 0;
 
-  // タブの定義
   const tabs: { id: TabType; label: string; icon: React.ReactNode }[] = [
     { id: "overview", label: "Overview", icon: <GitBranch size={13} /> },
     ...(hasArchitecture
@@ -62,13 +44,11 @@ export function WorkCard({ work, index }: WorkProps) {
       ref={containerRef}
       className="relative min-h-[90vh] py-24 px-6 md:px-12 lg:px-24 flex items-center border-b border-white/5"
     >
-      {/* index が奇数なら lg:flex-row-reverse で左右を反転 */}
       <div
         className={`max-w-[1400px] mx-auto w-full flex flex-col lg:flex-row items-stretch gap-16 lg:gap-24 relative z-10 ${
           isEven ? "" : "lg:flex-row-reverse"
         }`}
       >
-        {/* ── 画像エリア (7/12) ──────────────────────────────── */}
         <div className="lg:w-7/12 relative aspect-[4/3] lg:aspect-auto overflow-hidden">
           <motion.div
             style={{ y: imageY }}
@@ -100,7 +80,6 @@ export function WorkCard({ work, index }: WorkProps) {
           </motion.div>
           <div className="absolute inset-0 bg-background/20 mix-blend-overlay pointer-events-none" />
 
-          {/* キャッチコピーバッジ（画像の左下） */}
           {work.catchcopy && (
             <div className="absolute bottom-4 left-4 bg-background/80 backdrop-blur-sm px-4 py-2 border border-white/10">
               <p className="text-xs font-sans text-muted-foreground tracking-wide">
@@ -110,7 +89,6 @@ export function WorkCard({ work, index }: WorkProps) {
           )}
         </div>
 
-        {/* ── テキストエリア (5/12) ──────────────────────────── */}
         <div className="lg:w-5/12 flex flex-col justify-center py-12">
           <motion.div
             initial={{ opacity: 0, x: isEven ? 50 : -50 }}
@@ -118,7 +96,6 @@ export function WorkCard({ work, index }: WorkProps) {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* 技術スタックタグ */}
             <div className="flex flex-wrap gap-3 mb-6">
               {work.technologies.slice(0, 6).map((tech) => (
                 <span
@@ -135,12 +112,10 @@ export function WorkCard({ work, index }: WorkProps) {
               )}
             </div>
 
-            {/* 作品タイトル */}
             <h3 className="text-5xl lg:text-7xl font-serif font-black text-foreground mb-4 tracking-tighter leading-none">
               {work.title}
             </h3>
 
-            {/* ── タブナビゲーション ──────────────────────── */}
             <div className="flex gap-0 mb-8 border-b border-white/10">
               {tabs.map((tab) => (
                 <button
@@ -159,7 +134,6 @@ export function WorkCard({ work, index }: WorkProps) {
               ))}
             </div>
 
-            {/* ─── タブコンテンツ: Overview ──────────────── */}
             {activeTab === "overview" && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -167,12 +141,10 @@ export function WorkCard({ work, index }: WorkProps) {
                 transition={{ duration: 0.4 }}
                 className="space-y-8"
               >
-                {/* 概要文 */}
                 <p className="text-lg text-slate-200 font-sans font-light leading-relaxed">
                   {work.summary}
                 </p>
 
-                {/* 課題 */}
                 {work.challenge && (
                   <div className="relative pl-5 before:absolute before:left-0 before:top-1 before:bottom-1 before:w-[2px] before:bg-amber-500/40">
                     <h4 className="text-[10px] font-sans font-bold tracking-[0.2em] uppercase text-foreground mb-2">
@@ -184,7 +156,6 @@ export function WorkCard({ work, index }: WorkProps) {
                   </div>
                 )}
 
-                {/* 主要機能 */}
                 <div className="relative pl-5 before:absolute before:left-0 before:top-1 before:bottom-1 before:w-[2px] before:bg-amber-500/40">
                   <h4 className="text-[10px] font-sans font-bold tracking-[0.2em] uppercase text-foreground mb-2">
                     Key Features
@@ -199,7 +170,6 @@ export function WorkCard({ work, index }: WorkProps) {
                   </ul>
                 </div>
 
-                {/* 成果 */}
                 {work.achievements && (
                   <div className="p-4 bg-amber-500/5 border border-amber-500/15">
                     <p className="text-[10px] font-sans font-bold tracking-[0.2em] uppercase text-amber-500 mb-1">
@@ -213,7 +183,6 @@ export function WorkCard({ work, index }: WorkProps) {
               </motion.div>
             )}
 
-            {/* ─── タブコンテンツ: Architecture ──────────── */}
             {activeTab === "architecture" && hasArchitecture && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -221,7 +190,6 @@ export function WorkCard({ work, index }: WorkProps) {
                 transition={{ duration: 0.4 }}
               >
                 {work.architectureImageUrl ? (
-                  // アーキテクチャ図がある場合
                   <div className="relative aspect-[16/9] w-full overflow-hidden border border-white/10">
                     <Image
                       src={withBasePath(work.architectureImageUrl)}
@@ -232,7 +200,6 @@ export function WorkCard({ work, index }: WorkProps) {
                     />
                   </div>
                 ) : (
-                  // プレースホルダー
                   <div className="aspect-[16/9] w-full border-2 border-dashed border-white/15 flex flex-col items-center justify-center gap-4 bg-white/[0.02]">
                     <div className="w-16 h-16 rounded-full border-2 border-dashed border-white/20 flex items-center justify-center">
                       <GitBranch size={24} className="text-white/20" />
@@ -248,14 +215,12 @@ export function WorkCard({ work, index }: WorkProps) {
                     </div>
                   </div>
                 )}
-                {/* 説明テキスト */}
                 <p className="mt-4 text-xs font-sans text-muted-foreground/60 leading-relaxed">
                   システム全体のアーキテクチャ構成図。コンテナ分離構成・データフロー・インフラの相関を可視化しています。
                 </p>
               </motion.div>
             )}
 
-            {/* ─── タブコンテンツ: Why（技術選定理由） ──── */}
             {activeTab === "why" && work.techReason.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -283,7 +248,6 @@ export function WorkCard({ work, index }: WorkProps) {
               </motion.div>
             )}
 
-            {/* ── アクションボタン ──────────────────────────── */}
             <div className="mt-10 flex items-center flex-wrap gap-6">
               {work.siteUrl && (
                 <a
@@ -334,7 +298,6 @@ export function WorkCard({ work, index }: WorkProps) {
         </div>
       </div>
 
-      {/* ── 背景デコレーション番号 ─────────────────────────── */}
       <h2 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15vw] font-serif font-black text-white/[0.02] whitespace-nowrap pointer-events-none z-0">
         {index + 1 < 10 ? `0${index + 1}` : index + 1}
       </h2>

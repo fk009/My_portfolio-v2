@@ -1,19 +1,9 @@
-// ============================================================
-// Hero.tsx - ページ最上部のメインビジュアル（ヒーローセクション）
-//
-// 機能:
-// - バックエンド開発者としてのキャッチコピーを大きく表示
-// - framer-motion による段階的フェードインアニメーション
-// - 背景はアニメーティングなグラデーション＋グリッド装飾
-// - WorksセクションとEngineeringセクションへのCTAボタン
-// ============================================================
 "use client";
 
 import React from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, ExternalLink } from "lucide-react";
 
-// テキストを1単語ずつアニメーションするためのヘルパー
 const containerVariants = {
   hidden: {},
   visible: {
@@ -31,13 +21,11 @@ const wordVariants = {
   },
 };
 
-// スムーズスクロールヘルパー
 const scrollTo = (id: string) => {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 };
 
 export function Hero() {
-  // キャッチコピー（要修正時はここだけ変更）
   const headline1 = "見えない部分を整え、";
   const headline2 = "システムの";
   const headline3 = "土台を支える。";
@@ -47,9 +35,7 @@ export function Hero() {
       id="hero"
       className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-background"
     >
-      {/* ── 背景: アニメーティングなグラデーションメッシュ ────── */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        {/* グラデーション球体1 */}
         <motion.div
           animate={{
             x: [0, 30, -20, 0],
@@ -59,7 +45,6 @@ export function Hero() {
           transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
           className="absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full bg-blue-900/20 blur-[120px]"
         />
-        {/* グラデーション球体2 */}
         <motion.div
           animate={{
             x: [0, -40, 20, 0],
@@ -74,7 +59,6 @@ export function Hero() {
           }}
           className="absolute -bottom-48 -right-32 w-[700px] h-[700px] rounded-full bg-amber-900/15 blur-[140px]"
         />
-        {/* グラデーション球体3（中央アクセント） */}
         <motion.div
           animate={{
             x: [0, 20, -30, 0],
@@ -89,7 +73,6 @@ export function Hero() {
           }}
           className="absolute top-1/3 left-1/3 w-[400px] h-[400px] rounded-full bg-indigo-700/20 blur-[100px]"
         />
-        {/* ドットグリッド */}
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
@@ -98,13 +81,10 @@ export function Hero() {
             backgroundSize: "32px 32px",
           }}
         />
-        {/* ボーダーライン（下部） */}
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       </div>
 
-      {/* ── メインコンテンツ ──────────────────────────────────── */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-12 lg:px-24 text-center">
-        {/* ラベル */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -118,7 +98,6 @@ export function Hero() {
           <div className="w-8 h-px bg-amber-500" />
         </motion.div>
 
-        {/* メインキャッチコピー */}
         <div className="overflow-hidden mb-8" style={{ perspective: "1000px" }}>
           <motion.div
             variants={containerVariants}
@@ -132,8 +111,7 @@ export function Hero() {
                 variants={wordVariants}
                 className={`font-serif font-black tracking-tighter leading-[1.0] text-foreground ${
                   lineIdx === 2
-                    ? // 「土台を支える。」にアクセントカラー
-                      "text-5xl md:text-7xl lg:text-8xl text-amber-400"
+                    ? "text-5xl md:text-7xl lg:text-8xl text-amber-400"
                     : "text-5xl md:text-7xl lg:text-8xl"
                 }`}
               >
@@ -143,7 +121,6 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* サブテキスト */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -157,14 +134,12 @@ export function Hero() {
           一つずつ積み上げていく実装を心がけています。
         </motion.p>
 
-        {/* CTAボタン */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.1 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          {/* プライマリCTA: Works */}
           <button
             type="button"
             onClick={() => scrollTo("works")}
@@ -177,7 +152,6 @@ export function Hero() {
             />
           </button>
 
-          {/* セカンダリCTA: Engineering */}
           <button
             type="button"
             onClick={() => scrollTo("engineering")}
@@ -191,7 +165,6 @@ export function Hero() {
           </button>
         </motion.div>
 
-        {/* Qiita リンク */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -209,7 +182,6 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* ── スクロールインジケーター ──────────────────────────── */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
