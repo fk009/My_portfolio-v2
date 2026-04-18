@@ -31,7 +31,7 @@ export default function PrivacyPolicyPage() {
           Sidebar Notes プライバシーポリシー
         </h1>
         <p className="mt-4 text-sm text-muted-foreground">
-          最終更新日: 2026-04-16
+          最終更新日: 2026-04-18
         </p>
 
         <p className="mt-10 text-muted-foreground leading-relaxed">
@@ -62,7 +62,7 @@ export default function PrivacyPolicyPage() {
           <ul className="mt-3 list-disc pl-6 space-y-2 text-muted-foreground leading-relaxed">
             <li>メモ本文（ユーザーが入力したテキスト、装飾、貼り付けた画像等）</li>
             <li>ブックマーク状態（ユーザーが「ブックマーク」としてマークしたページの URL）</li>
-            <li>ゴミ箱データ（削除したメモ、削除日時等）</li>
+            <li>ごみ箱データ（削除したメモ、削除日時等）</li>
             <li>設定情報（テーマ等）</li>
           </ul>
 
@@ -82,7 +82,7 @@ export default function PrivacyPolicyPage() {
               <ul className="mt-2 list-disc pl-6 space-y-2">
                 <li>画像はメモ内に埋め込み（Data URL 形式）として保存されます。</li>
                 <li>
-                  選択範囲を切り出す処理のため、取得時に表示中ページの可視領域全体の画像データを一時的に扱いますが、切り出し後は保存せず、メモには選択範囲のみが保存されます。
+                  選択範囲を切り出す処理のため、取得時に表示中ページの可視領域全体の画像データを一時的に扱いますが、切り出し後は保存せず、メモには選択範囲のみが保存されます（切り抜きは拡張機能内で行います）。
                 </li>
               </ul>
             </li>
@@ -104,13 +104,20 @@ export default function PrivacyPolicyPage() {
             3. データの保存場所と送信
           </h2>
           <ul className="mt-4 list-disc pl-6 space-y-2 text-muted-foreground leading-relaxed">
-            <li>本拡張機能は、メモ・ブックマーク状態・ゴミ箱等を端末内（IndexedDB）に保存します。</li>
+            <li>本拡張機能は、メモ・ブックマーク状態・ごみ箱等を端末内（IndexedDB）に保存します。</li>
             <li>
               テーマ等の軽量な設定は{" "}
               <code className="px-1 py-0.5 rounded bg-muted text-foreground">
                 chrome.storage.local
               </code>{" "}
               （端末内の Chrome ストレージ）に保存します。
+            </li>
+            <li>
+              本拡張機能は{" "}
+              <code className="px-1 py-0.5 rounded bg-muted text-foreground">
+                chrome.storage.sync
+              </code>{" "}
+              等によるクラウド同期は行いません。
             </li>
             <li>
               本拡張機能は、開発者または第三者のサーバーにユーザーデータを送信しません（解析・広告・トラッキング用途の通信を行いません）。
@@ -137,7 +144,7 @@ export default function PrivacyPolicyPage() {
           <ul className="mt-4 list-disc pl-6 space-y-2 text-muted-foreground leading-relaxed">
             <li>メモや設定は、ユーザーが削除するまで端末内に保持されます。</li>
             <li>
-              削除したメモはゴミ箱に移動し、一定期間（14日）保持した後、自動的に破棄されます。ユーザーは手動で復元・完全削除・ゴミ箱を空にすることができます。
+              削除したメモはごみ箱に移動し、一定期間（14日）保持した後、自動的に破棄されます。ユーザーは手動で復元・完全削除・ごみ箱を空にすることができます。
             </li>
             <li>
               本拡張機能をアンインストールすると、Chrome の仕組みにより端末内に保存された本拡張機能のデータは削除されます（状況により手動での削除が必要な場合があります）。
@@ -178,7 +185,7 @@ export default function PrivacyPolicyPage() {
               <code className="px-1 py-0.5 rounded bg-muted text-foreground">
                 storage
               </code>
-              : メモ、ブックマーク、設定、ゴミ箱等を端末内に保存するため。
+              : メモ、ブックマーク、設定、ごみ箱等を端末内に保存するため。
             </li>
             <li>
               <code className="px-1 py-0.5 rounded bg-muted text-foreground">
@@ -196,7 +203,7 @@ export default function PrivacyPolicyPage() {
               <code className="px-1 py-0.5 rounded bg-muted text-foreground">
                 scripting
               </code>
-              : ユーザー操作に基づき、スクリーンショット範囲選択用のオーバーレイ等の処理を現在のページに対して実行するため。
+              : ユーザー操作（スクリーンショット実行時等）に基づき、スクリーンショット範囲選択用のオーバーレイ等の処理を現在のページに対して実行するため（コンテンツスクリプトは常時実行しません）。
             </li>
           </ul>
 
@@ -215,6 +222,11 @@ export default function PrivacyPolicyPage() {
                 &lt;all_urls&gt;
               </code>{" "}
               （任意のホスト権限）: スクリーンショット機能を、任意のサイト上で利用できるようにするため（ユーザーがスクリーンショット機能を使用する際に要求します）。
+              <ul className="mt-2 list-disc pl-6 space-y-2">
+                <li>
+                  スクリーンショット機能はユーザー操作に基づき、範囲選択 UI を表示して可視領域の画像を取得し、選択範囲のみをメモに保存する目的で使用します。
+                </li>
+              </ul>
             </li>
           </ul>
         </section>
@@ -241,4 +253,3 @@ export default function PrivacyPolicyPage() {
     </div>
   );
 }
-
