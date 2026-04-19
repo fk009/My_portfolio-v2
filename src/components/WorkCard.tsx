@@ -25,8 +25,16 @@ export function WorkCard({ work, index }: WorkProps) {
     target: containerRef,
     offset: ["start end", "end start"],
   });
-  const imageY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
+  const enableParallax = work.disableParallax !== true;
+  const imageY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    enableParallax ? ["-8%", "8%"] : ["0%", "0%"],
+  );
   const hasArchitecture = work.architectureImageUrl.trim().length > 0;
+  const imageFit = work.imageFit ?? "cover";
+  const imagePosition = work.imagePosition ?? "center";
+  const imageFitClass = imageFit === "contain" ? "object-contain" : "object-cover";
 
   const tabs: { id: TabType; label: string; icon: React.ReactNode }[] = [
     { id: "overview", label: "Overview", icon: <GitBranch size={13} /> },
@@ -45,14 +53,14 @@ export function WorkCard({ work, index }: WorkProps) {
       className="relative min-h-[90vh] py-24 px-6 md:px-12 lg:px-24 flex items-center border-b border-white/5"
     >
       <div
-        className={`max-w-[1400px] mx-auto w-full flex flex-col lg:flex-row items-stretch gap-16 lg:gap-24 relative z-10 ${
+        className={`max-w-[1400px] mx-auto w-full flex flex-col lg:flex-row items-stretch lg:items-start gap-16 lg:gap-24 relative z-10 ${
           isEven ? "" : "lg:flex-row-reverse"
         }`}
       >
-        <div className="lg:w-7/12 relative aspect-[4/3] lg:aspect-auto overflow-hidden">
+        <div className="lg:w-7/12 relative aspect-[4/3] overflow-hidden">
           <motion.div
             style={{ y: imageY }}
-            className="absolute inset-0 w-full h-[120%]"
+            className={`absolute inset-0 w-full ${enableParallax ? "h-[120%]" : "h-full"}`}
           >
             {work.imageUrl ? (
               <motion.div
@@ -60,14 +68,15 @@ export function WorkCard({ work, index }: WorkProps) {
                 whileInView={{ filter: "grayscale(0%)" }}
                 viewport={{ once: false, margin: "-25% 0px -25% 0px" }}
                 transition={{ duration: 1 }}
-                className="w-full h-full relative"
+                className={`w-full h-full relative ${imageFit === "contain" ? "bg-white/[0.02]" : ""}`}
               >
                 <Image
                   src={withBasePath(work.imageUrl)}
                   alt={work.title}
                   fill
                   sizes="(max-width: 1024px) 100vw, 58vw"
-                  className="object-cover"
+                  className={imageFitClass}
+                  style={{ objectPosition: imagePosition }}
                 />
               </motion.div>
             ) : (

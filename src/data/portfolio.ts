@@ -20,6 +20,9 @@ export type WorkItem = {
   articleUrl: string; // 解説記事 URL（Qiitaなど）
   imageUrl: string; // サムネイル画像（/public/img/ 以下）
   architectureImageUrl: string; // アーキテクチャ図画像（なければ空文字）
+  imageFit?: "cover" | "contain"; // next/image の object-fit（スクショ系は contain が見やすいことがある）
+  imagePosition?: string; // CSS object-position（例: "70% 50%"）
+  disableParallax?: boolean; // 画像のパララックス（スクロール追従）を無効化
 };
 
 /** Engineering Approach セクション: 1件の課題解決カードデータ */
@@ -125,6 +128,9 @@ export const portfolioData = {
       articleUrl: "https://qiita.com/yuurei_09/items/1b13de459142d09a964e",
       imageUrl: "/img/EmoReader.png",
       architectureImageUrl: "/img/emo-reader-arch.png",
+      disableParallax: true,
+      imageFit: "cover",
+      imagePosition: "42% 72%",
     } as WorkItem,
 
     // ─── サブプロジェクト ───
@@ -154,29 +160,59 @@ export const portfolioData = {
     } as WorkItem,
 
     {
-      id: "raspi-camera",
-      title: "ラズパイ監視カメラ",
-      catchcopy: "クラウド不要・低コストの自作防犯システム",
+      id: "sidebar-notes",
+      title: "Sidebar Notes",
+      catchcopy: "URLごとにメモを保存できるChromeサイドパネル拡張",
       summary:
-        "Raspberry Pi と自宅NASを活用した、自作の安価な防犯システムです。",
+        "ブラウザのサイドパネルで、開いているページ（URL）ごとにメモを作成・検索できるChrome拡張です。メモは端末内（IndexedDB）に保存され、外部サーバーへ送信しません（同期もしません）。",
       background:
-        "ラズベリーパイを活用した開発への興味と、自宅の防犯強化のために制作しました。",
+        "調べもの中のメモがタブ・サービス間で散らばり、後から探し直すコストが大きいのが課題でした。「ページに紐づくメモ」が自然に残る体験を、ブラウザ内で完結させたくて制作しました。",
       challenge:
-        "市販の高価なサービスやクラウドに依存しない、ローカルかつ低コストな監視体制の構築。",
+        "URL単位のメモを「確実に」自動保存・復元しつつ、リッチテキスト/貼り付け/スクリーンショット等の入力経路が増えても破綻しないデータ設計と安全性（サニタイズ）を両立すること。",
       features: [
-        "動体検知による録画の自動開始",
-        "自宅NASへの動画自動送信",
-        "Pythonを用いた1日ごとの動画結合・整理機能",
+        "URLごとのメモ作成・編集・検索（リッチテキスト）",
+        "自動保存（入力停止後 / パネル非表示時）＋タブ切替追従（任意権限）",
+        "メモ一覧（すべて / 直近 / サイト別）＋ごみ箱（14日で自動整理）",
+        "スクリーンショット（範囲選択→メモへ貼り付け、任意権限）",
+        "Markdown貼り付け（最小）: テーブル / 箇条書き / 番号リスト",
+        "JSONL形式でのエクスポート／インポート",
       ],
-      technologies: ["Raspberry Pi", "Python", "NAS"],
-      techReason: [],
-      achievements: "安価でプライバシーの保たれる自作防犯システムを実現。",
-      githubUrl: "https://github.com/fk009/raspberry_camera",
+      technologies: [
+        "Chrome Extensions (MV3)",
+        "JavaScript",
+        "IndexedDB",
+        "DOMPurify",
+        "Node.js",
+        "Puppeteer",
+      ],
+      techReason: [
+        {
+          tech: "端末内保存（IndexedDB）vs クラウド同期",
+          reason:
+            "「外部へ送らない」ことを最優先に、メモは端末内へ保存。クラウド同期の利便性は捨てる代わりに、プライバシーとオフライン耐性を確保しました。",
+        },
+        {
+          tech: "リッチテキスト + HTMLサニタイズ（DOMPurify）",
+          reason:
+            "貼り付け/スクショ等で入力経路が増えるほどHTMLを扱うリスクが上がるため、保存・表示の両方で必ずサニタイズして安全性を担保。表現力と安全性のバランスを取っています。",
+        },
+        {
+          tech: "UIの自動検証（Puppeteer）",
+          reason:
+            "サイドパネルUIは手動確認だけだと退行が混入しやすい。速度別にテストを分け、普段は高速な検証を回しつつ、必要時にE2Eも実行できる運用にしました。",
+        },
+      ],
+      achievements:
+        "「ページごとのメモ」をブラウザ内で完結。検索・フィルタ・ごみ箱・エクスポートなど、日常運用で困りやすい周辺機能まで含めて作り込みました。",
+      githubUrl: "",
       videoUrl: "",
       siteUrl: "",
       articleUrl: "",
-      imageUrl: "/img/raspberry.jpg",
+      imageUrl: "/img/Sidebar_Notes.png",
       architectureImageUrl: "",
+      imageFit: "cover",
+      imagePosition: "72% 50%",
+      disableParallax: true,
     } as WorkItem,
   ],
 
