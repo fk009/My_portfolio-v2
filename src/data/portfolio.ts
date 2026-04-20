@@ -204,9 +204,10 @@ export const portfolioData = {
       ],
       achievements:
         "「ページごとのメモ」をブラウザ内で完結。検索・フィルタ・ごみ箱・エクスポートなど、日常運用で困りやすい周辺機能まで含めて作り込みました。",
-      githubUrl: "",
+      githubUrl: "https://github.com/fk009/sidebar_note",
       videoUrl: "",
-      siteUrl: "",
+      siteUrl:
+        "https://chromewebstore.google.com/detail/gjjhihgdlfbmbhdcpanhelejgelimbfl?utm_source=item-share-cb",
       articleUrl: "",
       imageUrl: "/img/Sidebar_Notes.png",
       architectureImageUrl: "",

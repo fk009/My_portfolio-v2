@@ -75,6 +75,7 @@ export function WorkCard({ work, index }: WorkProps) {
                   alt={work.title}
                   fill
                   sizes="(max-width: 1024px) 100vw, 58vw"
+                  loading={work.id === "sidebar-notes" ? "eager" : undefined}
                   className={imageFitClass}
                   style={{ objectPosition: imagePosition }}
                 />
