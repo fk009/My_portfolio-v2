@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: "https://fk009.github.io/My_portfolio-v2/public/img/portfolio_OGP.jpg",
+        url: "https://fk009.github.io/My_portfolio-v2/img/portfolio_OGP.jpg",
         width: 1737,
         height: 905,
         alt: "Portfolio OGP Image",
