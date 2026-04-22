@@ -17,6 +17,16 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "Portfolio",
   description: "A bold and dynamic creative portfolio",
+  openGraph: {
+    images: [
+      {
+        url: "https://fk009.github.io/My_portfolio-v2/portfolio_OGP.jpg",
+        width: 1737,
+        height: 905,
+        alt: "Portfolio OGP Image",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
